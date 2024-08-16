@@ -34,3 +34,17 @@ body {
     display: flex;
     justify-content: center;
   }
+
+  .losePopup{
+    font-weight: bold;
+    background-color: rgb(75, 235, 168);
+    color: rgb(255, 255, 255);
+    border: #333 solid 1px;
+    width: max-content;
+    padding: 80px;
+    margin: auto;
+    visibility: hidden;
+    border-radius: 30px;
+    position: relative;
+    bottom: 250px;
+  }

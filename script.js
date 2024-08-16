@@ -1,5 +1,6 @@
 const letters = document.querySelectorAll(".scoreboard-letter");
 const letterApi = "https://words.dev-apis.com/word-of-the-day";
+const pop=document.querySelector(".losePopup");
 let rowNumber = 0;
 
 // main function
@@ -44,15 +45,25 @@ async function init() {
     }
 
     async function commit() {
+       
+         
+        const res = await fetch("https://words.dev-apis.com/validate-word", {
+            method: "POST",
+            body: JSON.stringify({ word: currentGuess }),
+          });
+          const { validWord } = await res.json();
+        
+        if(!validWord){
+            alert('not a valid word');
+            return;
+        }
+
+
         if (currentGuess.length != 5) {
             return;
         }
 
-        if (theWord === currentGuess) {
-            alert("You won! The word was " + theWord);
-            done=true;
-            return;
-        }
+       
 
         const wordMap = {};
         for (let i = 0; i < 5; i++) {
@@ -71,14 +82,31 @@ async function init() {
                 wrong(i);
             }
         }
-
+        if (theWord === currentGuess) {
+            alert("You won! The word was " + theWord);
+            popUP();
+            done=true;
+            
+        }
         if (rowNumber >= 5) {
-            alert(`You lose! The word was ${theWord}`);
+            console.log("inside lose");
+           popUP();
                 done=true;
                 return;
           
         }
-
+        function popUP(){
+          
+            pop.style.visibility="visible";
+            clear();
+        }
+        
+function clear(){
+    document.addEventListener('click',()=>{
+        pop.style.visibility="hidden";
+        pop.style.value=`Thanks for playing today! /n Todays word was ${theWord}`;
+        })
+}
         rowNumber++;
         currentGuess = '';
     }
@@ -86,6 +114,7 @@ async function init() {
     function correct(n) {
         const num = n + 5 * rowNumber;
         document.getElementById(`letter-${num}`).style.backgroundColor = "darkgreen";
+        document.getElementById(`letter-${num}`).style.color = "white";
     }
 
     function close(n) {
