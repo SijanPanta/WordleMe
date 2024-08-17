@@ -96,7 +96,7 @@ async function init() {
           
         }
         function popUP(){
-          
+            alert("You Lost! The word was " + theWord);
             pop.style.visibility="visible";
             clear();
         }
@@ -120,11 +120,13 @@ function clear(){
     function close(n) {
         const num = n + 5 * rowNumber;
         document.getElementById(`letter-${num}`).style.backgroundColor = "goldenrod";
+        document.getElementById(`letter-${num}`).style.color = "white";
     }
 
     function wrong(n) {
         const num = n + 5 * rowNumber;
         document.getElementById(`letter-${num}`).style.backgroundColor = "grey";
+        document.getElementById(`letter-${num}`).style.color = "white";
     }
 
     function backspace() {
